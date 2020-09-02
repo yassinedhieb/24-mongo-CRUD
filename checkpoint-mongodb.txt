@@ -1,0 +1,98 @@
+MongoDB server version: 4.4.0
+---
+The server generated these startup warnings when booting:
+        2020-09-02T12:05:17.076+01:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+        2020-09-02T12:05:17.076+01:00: This server is bound to localhost. Remote systems will be unable to connect to this server. Start the server with --bind_ip <address> to specify which IP addresses it should serve responses from, or with --bind_ip_all to bind to all interfaces. If this behavior is desired, start the server with --bind_ip 127.0.0.1 to disable this warning
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> use contactlist
+switched to db contactlist
+> db.contactlist.insert({ "last_name" : "Fatnassi", "First_name" : "Sarra", "Email" : "sarra.f@gmail.com", "age" :40})
+WriteResult({ "nInserted" : 1 })
+> db.contactlist.insert({ "last_name" : "Cherif", "First_name" : "Sami", "age" :3})
+WriteResult({ "nInserted" : 1 })
+> db.contactlist.insert({ "last_name" : "Ben Yahia", "First_name" : "Rym", "age" :4})
+WriteResult({ "nInserted" : 1 })
+> db.contactlist.find()
+{ "_id" : ObjectId("5f4f6549c2bb985134375d05"), "name" : "fares", "Email" : "fares@gmail.com", "age" : 26 }
+{ "_id" : ObjectId("5f4f7c8bd80f5bd216a99b71"), "last_name" : "Fatnassi", "First_name" : "Sarra", "Email" : "sarra.f@gmail.com", "age" : 40 }
+{ "_id" : ObjectId("5f4f7cbdd80f5bd216a99b72"), "last_name" : "Cherif", "First_name" : "Sami", "age" : 3 }
+{ "_id" : ObjectId("5f4f7ccdd80f5bd216a99b73"), "last_name" : "Ben Yahia", "First_name" : "Rym", "age" : 4 }
+> db.contactlist.find().pretty()
+{
+        "_id" : ObjectId("5f4f6549c2bb985134375d05"),
+        "name" : "fares",
+        "Email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("5f4f7c8bd80f5bd216a99b71"),
+        "last_name" : "Fatnassi",
+        "First_name" : "Sarra",
+        "Email" : "sarra.f@gmail.com",
+        "age" : 40
+}
+{
+        "_id" : ObjectId("5f4f7cbdd80f5bd216a99b72"),
+        "last_name" : "Cherif",
+        "First_name" : "Sami",
+        "age" : 3
+}
+{
+        "_id" : ObjectId("5f4f7ccdd80f5bd216a99b73"),
+        "last_name" : "Ben Yahia",
+        "First_name" : "Rym",
+        "age" : 4
+}
+> db.contactlist.find({"_id" : ObjectId("5f4f6939aa63fd1d7ba17408")})
+> db.contactlist.find({"_id" : ObjectId("5f4f6549c2bb985134375d05")})
+{ "_id" : ObjectId("5f4f6549c2bb985134375d05"), "name" : "fares", "Email" : "fares@gmail.com", "age" : 26 }
+> db.contactlist.find({age:{$gt:18}}
+... ^C
+
+> db.contactlist.find({age:{$gt:18}})
+{ "_id" : ObjectId("5f4f6549c2bb985134375d05"), "name" : "fares", "Email" : "fares@gmail.com", "age" : 26 }
+{ "_id" : ObjectId("5f4f7c8bd80f5bd216a99b71"), "last_name" : "Fatnassi", "First_name" : "Sarra", "Email" : "sarra.f@gmail.com", "age" : 40 }
+> db.contactlist.find({age:{$gt:18},last_name:{$regex:/ah/}})
+> db.contactlist.find({age:{$gt:18},last_name:{$regex:/'ah'/}})
+> db.contactlist.find({age:{$gt:18},last_name:{$regex:/^ah$/}})
+> db.contactlist.find({age:{$gt:18},last_name:{$regex:/^ah/}})
+> db.contactlist.find({age:{$gt:18},last_name:{$regex:/"ah"/}})
+> db.contactlist.find({age:{$gt:18},last_name:{$regex:/ah/}})
+> db.contactlist.find({age:{$lt:18},last_name:{$regex:/ah/}})
+{ "_id" : ObjectId("5f4f7ccdd80f5bd216a99b73"), "last_name" : "Ben Yahia", "First_name" : "Rym", "age" : 4 }
+> db.contactlist.update({First_name:"Seif"},{"First_Name":"Anis"})
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.contaclist.find()
+> db.contactlist.find()
+{ "_id" : ObjectId("5f4f6549c2bb985134375d05"), "name" : "fares", "Email" : "fares@gmail.com", "age" : 26 }
+{ "_id" : ObjectId("5f4f7c8bd80f5bd216a99b71"), "last_name" : "Fatnassi", "First_name" : "Sarra", "Email" : "sarra.f@gmail.com", "age" : 40 }
+{ "_id" : ObjectId("5f4f7cbdd80f5bd216a99b72"), "last_name" : "Cherif", "First_name" : "Sami", "age" : 3 }
+{ "_id" : ObjectId("5f4f7ccdd80f5bd216a99b73"), "last_name" : "Ben Yahia", "First_name" : "Rym", "age" : 4 }
+> db.contactlist.insert({ "last_name" : "Kefi", "First_name" : "Seif","Email":"kefi@gmail.com" "age" :15})
+uncaught exception: SyntaxError: missing } after property list :
+@(shell):1:93
+> db.contactlist.insert({ "last_name" : "Kefi", "First_name" : "Seif","Email":"kefi@gmail.com" "age" :15})
+uncaught exception: SyntaxError: missing } after property list :
+@(shell):1:93
+> db.contactlist.insert({ "last_name" : "Kefi", "First_name" : "Seif","Email":"kefi@gmail.com", "age" :15})
+WriteResult({ "nInserted" : 1 })
+> db.contactlist.update({First_name:"Seif"},{"First_Name":"Anis"})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.contactlist.remove({age:{$lt:5}})
+WriteResult({ "nRemoved" : 2 })
+> db.contactlist.find()
+{ "_id" : ObjectId("5f4f6549c2bb985134375d05"), "name" : "fares", "Email" : "fares@gmail.com", "age" : 26 }
+{ "_id" : ObjectId("5f4f7c8bd80f5bd216a99b71"), "last_name" : "Fatnassi", "First_name" : "Sarra", "Email" : "sarra.f@gmail.com", "age" : 40 }
+{ "_id" : ObjectId("5f4f8214d80f5bd216a99b74"), "First_Name" : "Anis" }
+>
